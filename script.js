@@ -46,3 +46,4 @@ function displayMovies(movies) {
 $(document).ready(function () {
     fetchFavorites();
 });
+
