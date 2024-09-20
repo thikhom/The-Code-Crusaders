@@ -7,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML Template</title>
     <meta name="keywords" content="HTML, CSS, JavaScript, Bootstrap, Template">
-    <meta name="author" content="Name, Surname, Student Number">
+    <meta name="author" content="Code Crusaders - Thikho (241295), Anika (231312), Erin (241321), KB (241299) ">
 
-    <!-- link bootstrap and javascript here (in that order) 
-         BootStrap Semester 2
-         Javascript Term 2 -->
+    <!-- Link Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- link all Google Fonts to be used here
-         Week 5-->
-
-    <!-- link CSS here
-         Week 3-->
-
+    <!-- Link all Google Fonts to be used -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <!-- Link Custom CSS -->
+    <link rel="stylesheet" href="main.css"> 
 
 </head>
 
@@ -29,18 +29,31 @@
         <!-- easier to for screen readers for accessibility if it's not in the header-->
     </nav>
 
-    <header class="lowOpacity">
+    <header class="aClass">
         <!-- everything above the fold-->
     </header>
 
-    <section id="greenSection">
+    <section id="firstSection">
         <!-- break content into sections for neatness, easier styling and better overall coding control-->
         <!-- name sections with id or class name-->
+        <div id="movieFavSection">
+            <h2>Your Favourite Movies</h2>
+            <div id="movieList" class="d-flex flex-wrap"></div>
+        </div>
     </section>
 
     <footer>
-        <p><i>Copyright 2024 -HTML Template Inc</i></p>
+        <p><i>Copyright 2024 - HTML Template Inc</i></p>
     </footer>
+
+    <!-- Link jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Link Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Link your custom JS file -->
+    <script src="script.js"></script>
 
 </body>
 
