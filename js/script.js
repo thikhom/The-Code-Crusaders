@@ -9,6 +9,27 @@ const options = {
 	}
 };
 
+class Movies{
+    constructor(name, poster, genre){
+        this.name = name;
+        this.poster = poster;
+        this.genre = genre;
+    }
+}
+
+class Horror extends Movies{
+    constructor(name, age){
+        super(name, age);
+        this.occ = "student";
+    }
+}
+
+class Comedy extends Movies{
+    constructor(name, age){
+        super(name, age);
+        this.occ = "student";
+    }
+}
 
 async function GetMovies(){
     try {
@@ -16,6 +37,18 @@ async function GetMovies(){
         const result = await response.json();
         console.log(result);
         getImage(result);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function GetGenres(){
+    try {
+        const response = await fetch(`https://moviesdatabase.p.rapidapi.com/titles/utils/genres`, options);
+        const result = await response.json();
+        console.log(result);
+        console.log(result.results.Comedy)
+        //getImage(result);
     } catch (error) {
         console.error(error);
     }
@@ -32,5 +65,7 @@ function getImage(result){
     }
     
 }
+console.log()
 
-GetMovies();
+GetGenres()
+//GetMovies();
