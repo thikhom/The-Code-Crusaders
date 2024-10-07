@@ -1,2 +1,57 @@
-/* Hi There !*/
-/*sup matie*/
+.--breadcrumb-divider-color{
+    color: red;
+}
+
+.breadcrumb{
+    color: red;
+}
+
+.active{
+    color: green;
+}
+
+.breadcrumb-bg{
+    color: green;
+}
+
+#breadcrumb-item{
+    font-weight: 900;
+}
+
+/* Hidding sections under 960px width */
+@media screen and (max-width: 960px) {
+    .hide-on-responsive{
+        display: none;
+    }
+}
+
+#fp-nav ul li a span, 
+.fp-slidesNav ul li a span{
+    background-color: white;
+}
+
+
+.actions{
+    position: absolute;
+    z-index: 999;
+    top: 40px;
+    left: 50px;
+}
+.actions li{
+    display: inline-block;
+}
+.actions button {
+    padding: 0.93em 1.87em;
+    background: #35495e;
+    border-radius: 5px;
+    border: 0;
+    color: #fff;
+    margin: 7px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background: #fff;
+    color: #35495e;
+}
