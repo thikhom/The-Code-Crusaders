@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Helvetica, sans-serif;
+}
+
+
+@font-face {
+    font-family: PorterSans;
+    src: url(../assets/Fonts/porter_sans_block/porter-sans-inline-block.otf);
+}
+
+@font-face {
+    font-family: PorterSansExplore;
+    src: url(../assets/Fonts/porter_sans_block/porter-sans-inline-block-webfont.eot);
+}
+
+.carouselSection{
+    background-color: #343434;
+    height: auto;
+}
+
+.carousel-caption {
+    position: relative;
+}
+.carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    padding: 20px;
+    padding-left: 50px;
+}
+
+.carousel-caption {
+    padding-left: 30px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.scrollable-row {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.scrollable-row .card {
+    display: inline-block;
+    min-width: 200px;
+    margin-right: 1rem;
+}
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+.card-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.scrollabeSection{
+    background-color: #9A9A9A;
+    height: auto;
+}
+
+.carousel-control-prev{
+    width: 100px;
+}
+
+.carousel-control-next{
+    width: 100px;
+}
+
+.findOutMore{
+    background-image: url("../assets/placeholder.jpg");
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.findOutMoreText{
+    width: 500px;
+    
+}
+
+.centerFindMoreText{
+   text-align: center;
+   align-content: center;
+}
