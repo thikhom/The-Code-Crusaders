@@ -22,7 +22,6 @@ function saveJsonObject(jsonObject, ID){
     }
 }
 
-
 //Retrieves JSON object with ID
 function getJsonObject(ID){
     const item = localStorage.getItem(ID);
@@ -86,7 +85,7 @@ class Horror extends Movies{
 class Action extends Movies{
     constructor(name, poster){
         super(name, poster);
-        this.genre = "Documentary";
+        this.genre = "Action";
     }
 }
 
@@ -103,8 +102,8 @@ let Comedy1 = new Comedy(4, "33");
 
 //calling the object functions
 
-//Horror1.GetMovieNames(Horror1.genre);
-Action1.GetMovieNames(Action1.genre);
+Horror1.GetMovieNames(Horror1.genre);
+//Action1.GetMovieNames(Action1.genre);
 //Comedy1.GetMovieNames(Comedy1.genre);
 
 async function UpdateImages(result){
@@ -113,7 +112,7 @@ async function UpdateImages(result){
         //const JSON_result = JSON.parse(result);
 
         //looping through the total images on home screen
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 6; index++) {
 
             //checking to see if i already have JSON object stored
             if(getJsonObject(result.results[index].imdb_id) == null){
@@ -139,7 +138,7 @@ async function UpdateImages(result){
         }
         //finally setting the images, using a buffer to load the images in chuncks
         
-        for (let index = 0; index < 5; index++){
+        for (let index = 0; index < 6; index++){
             document.getElementsByClassName("flex1")[index].src = image_Buffer[index];
             document.getElementsByClassName("movieAnchor")[index].href = "https://www.imdb.com/title/" + result.results[index].imdb_id + "/";
         }
