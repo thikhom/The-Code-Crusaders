@@ -1,5 +1,6 @@
 pageNumber = 1;
 moviesPageAmount = 10;
+chunkSize = 3;
 
 image_Buffer = [];
 
@@ -111,9 +112,9 @@ async function UpdateImages(result){
         let api_result;
         //const JSON_result = JSON.parse(result);
 
+        let rowSize = chunkSize;
         //looping through the total images on home screen
-        for (let index = 0; index < 6; index++) {
-
+        for (let index = 0; index < 7; index++) {
             //checking to see if i already have JSON object stored
             if(getJsonObject(result.results[index].imdb_id) == null){
                 //calling API for results
@@ -134,13 +135,16 @@ async function UpdateImages(result){
             }
             
             image_Buffer.push(api_result.results.banner)
-            
-        }
-        //finally setting the images, using a buffer to load the images in chuncks
-        
-        for (let index = 0; index < 6; index++){
-            document.getElementsByClassName("flex1")[index].src = image_Buffer[index];
-            document.getElementsByClassName("movieAnchor")[index].href = "https://www.imdb.com/title/" + result.results[index].imdb_id + "/";
+
+            //finally setting the images, using a buffer to load the images in chuncks
+
+            if(index >= rowSize - 1){
+                for (let index = 0; index < rowSize; index++){
+                    document.getElementsByClassName("flex1")[index].src = image_Buffer[index];
+                    document.getElementsByClassName("movieAnchor")[index].href = "https://www.imdb.com/title/" + result.results[index].imdb_id + "/";
+                }
+                rowSize = rowSize + chunkSize;
+            }
         }
     }
     catch(error){
