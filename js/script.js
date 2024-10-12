@@ -31,23 +31,23 @@ function getJsonObject(ID){
 }
 
 class Movies{
-    constructor(name, poster, genre){
+    constructor(name, row, genre){
         this.name = name;
-        this.poster = poster;
+        this.row = row;
         this.genre = genre;
     }
 
-    GetMovieNames(movie_Genre){
+    GetMovieNames(Movie){
         async function movieName(){
             try{
                 let result;
 
                 //checking to see if i already have the result stored: to reduce API calls
 
-                if(getJsonObject(String(pageNumber) + movie_Genre) == null)
+                if(getJsonObject(String(pageNumber) + Movie.genre) == null)
                 {
                     //calling API for result as it not stored
-                    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/byGen/${movie_Genre}/`, options_mmd)
+                    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/byGen/${Movie.genre}/`, options_mmd)
                     const _result = await response.json();
                     result = _result;
 
@@ -55,15 +55,15 @@ class Movies{
                     UpdateImages(result);
 
                     //saving result for future use
-                    saveJsonObject(JSON.stringify(result), String(pageNumber) + movie_Genre);
+                    saveJsonObject(JSON.stringify(result), String(pageNumber) + Movie.genre);
                 } 
                 else
                 {
                     //using the already stored result
-                    result = getJsonObject(String(pageNumber) + movie_Genre)
+                    result = getJsonObject(String(pageNumber) + Movie.genre)
 
                      //updating home page images
-                    UpdateImages(JSON.parse(result));
+                    UpdateImages(JSON.parse(result), Movie);
                 }
                 console.log(result);
 
@@ -77,44 +77,45 @@ class Movies{
 }
 
 class Horror extends Movies{
-    constructor(name, poster){
-        super(name, poster);
+    constructor(name, row){
+        super(name, row);
         this.genre = "Horror";
     }
 }
 
 class Action extends Movies{
-    constructor(name, poster){
-        super(name, poster);
+    constructor(name, row){
+        super(name, row);
         this.genre = "Action";
     }
 }
 
 class Comedy extends Movies{
-    constructor(name, poster){
-        super(name, poster);
+    constructor(name, row){
+        super(name, row);
         this.genre = "Comedy";
     }
 }
 
 let Horror1 = new Horror(4, "33");
 let Action1 = new Action(4, "33");
-let Comedy1 = new Comedy(4, "33");
+let Comedy1 = new Comedy(4, 5);
 
 //calling the object functions
 
-Horror1.GetMovieNames(Horror1.genre);
+//Horror1.GetMovieNames(Horror1.genre);
 //Action1.GetMovieNames(Action1.genre);
-//Comedy1.GetMovieNames(Comedy1.genre);
+Comedy1.GetMovieNames(Comedy1);
 
-async function UpdateImages(result){
+async function UpdateImages(result, Movie){
     try{
         let api_result;
         //const JSON_result = JSON.parse(result);
 
         let rowSize = chunkSize;
+        let imagePointer = Movie.row;
         //looping through the total images on home screen
-        for (let index = 0; index < 7; index++) {
+        for (let index = 0; index < Movie.row; index++) {
             //checking to see if i already have JSON object stored
             if(getJsonObject(result.results[index].imdb_id) == null){
                 //calling API for results
@@ -138,12 +139,13 @@ async function UpdateImages(result){
 
             //finally setting the images, using a buffer to load the images in chuncks
 
-            if(index >= rowSize - 1){
+            if(index >= rowSize - 1 || imagePointer < chunkSize){
                 for (let index = 0; index < rowSize; index++){
                     document.getElementsByClassName("flex1")[index].src = image_Buffer[index];
                     document.getElementsByClassName("movieAnchor")[index].href = "https://www.imdb.com/title/" + result.results[index].imdb_id + "/";
                 }
                 rowSize = rowSize + chunkSize;
+                imagePointer -= chunkSize;
             }
         }
     }
