@@ -77,7 +77,8 @@ class Movies{
                      //updating home page images
                     UpdateImages(JSON.parse(result), Movie);
                 }
-                //console.log(result);
+                //console.log(JSON.parse(result));
+                //console.log(RowPointer);
 
             } catch(error){
                 console.log(error);
@@ -123,14 +124,11 @@ let War1 = new War("WarRow", 4)
 
 //calling the object functions
 
-//Comedy1.GetMovieNames(Comedy1);
-//Horror1.GetMovieNames(Horror1);
-//Thriller1.GetMovieNames(Thriller1);
-//War1.GetMovieNames(War1);
-
 //localStorage.clear();
 
 const movieRowList = [Comedy1, Horror1, Thriller1, War1]
+
+movieRowList[0].GetMovieNames(movieRowList[0]);
 
 async function loadRows(){
     for(const fn of movieRowList){
@@ -138,7 +136,7 @@ async function loadRows(){
     }
 }
 
-loadRows();
+//loadRows();
 
 async function UpdateImages(result, Instance){
     try{
@@ -166,22 +164,26 @@ async function UpdateImages(result, Instance){
                 console.log(api_result.results.title);
             }
             
-            image_Buffer.push(api_result)
+            image_Buffer.push(api_result);
             //console.log(api_result);
-            console.log(image_Buffer);
+            //console.log(image_Buffer);
             //finally setting the images, using a buffer to load the images in chuncks
 
-            document.getElementsByClassName(Instance.name)[index].src = image_Buffer[index].results.banner;
-            document.getElementsByClassName(Instance.name+"Anchor")[index].href = "https://www.imdb.com/title/" + image_Buffer[index].results.imdb_id + "/";
+            document.getElementsByClassName(Instance.name)[index].src = api_result.results.banner;
+            document.getElementsByClassName(Instance.name+"Anchor")[index].href = "https://www.imdb.com/title/" + api_result.results.imdb_id + "/";
             if(document.getElementsByClassName(Instance.name+"Title")[index] != undefined){
-                document.getElementsByClassName(Instance.name+"Title")[index].innerHTML = image_Buffer[index].results.title;
+                document.getElementsByClassName(Instance.name+"Title")[index].innerHTML = api_result.results.title;
             }
-            
         }
-        for (let index = 0; index < Instance.row; index++) {
-            //console.log(image_Buffer.shift());
+        RowPointer++;
+        //console.log(RowPointer);
+        if(RowPointer < movieRowList.length){
+            console.log(RowPointer)
+            movieRowList[RowPointer].GetMovieNames(movieRowList[RowPointer]);
+        }else{
+            console.log(RowPointer);
+            RowPointer = 0;
         }
-
         image_Buffer = [];
     }
     catch(error){
