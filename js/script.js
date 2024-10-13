@@ -1,9 +1,10 @@
 pageNumber = 1;
 moviesPageAmount = 10;
+chunkSize = 3;
+moviePointer = 0;
+RowPointer = 0;
 
 image_Buffer = [];
-image_cache = [];
-movie_results_cache = [];
 
 const options_mmd = {
 	method: 'GET',
@@ -13,6 +14,7 @@ const options_mmd = {
 	}
 };
 
+//saves a JSON Object with its unique ID
 function saveJsonObject(jsonObject, ID){
     try{
         localStorage.setItem(ID, JSON.stringify(jsonObject))
@@ -23,37 +25,61 @@ function saveJsonObject(jsonObject, ID){
     }
 }
 
+//Retrieves JSON object with ID
 function getJsonObject(ID){
     const item = localStorage.getItem(ID);
     //console.log(JSON.parse(item));
     return JSON.parse(item);
 }
 
-class Movies{
-    constructor(name, poster, genre){
-        this.name = name;
-        this.poster = poster;
-        this.genre = genre;
-    }
+async function LoadMovieSpecialized(MovieID){
+    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/id/${MovieID}/`, options_mmd)
+    const api_result_cached = await response.json();
+    api_result = api_result_cached;
+    console.log(api_result);
 
-    GetMovieNames(movie_Genre){
+    //document.getElementById(MovieID).href = "https://www.imdb.com/title/" + api_result.results[0].imdb_id + "/";
+    document.getElementById(MovieID).src = api_result.results[0].banner;
+}
+
+class Movies{
+    constructor(name, row, genre){
+        this.name = name;
+        this.row = row;
+        this.genre = genre;
+
+    }
+    GetMovieNames(Movie){
         async function movieName(){
             try{
                 let result;
-                if(getJsonObject(String(pageNumber) + movie_Genre) == null)
+
+                //checking to see if i already have the result stored: to reduce API calls
+
+                if(getJsonObject(String(pageNumber) + Movie.genre) == null)
                 {
-                    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/byGen/${movie_Genre}/`, options_mmd)
+                    //calling API for result as it not stored
+                    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/byGen/${Movie.genre}/`, options_mmd)
                     const _result = await response.json();
                     result = _result;
-                    saveJsonObject(JSON.stringify(result), String(pageNumber) + movie_Genre);
+
+                     //updating home page images
+                    UpdateImages(result, Movie);
+
+                    //saving result for future use
+                    saveJsonObject(JSON.stringify(result), String(pageNumber) + Movie.genre);
                 } 
                 else
                 {
-                    result = getJsonObject(String(pageNumber) + movie_Genre)
+                    //using the already stored result
+                    result = getJsonObject(String(pageNumber) + Movie.genre)
+
+                     //updating home page images
+                    UpdateImages(JSON.parse(result), Movie);
                 }
-                console.log(result);
-                UpdateImages(JSON.parse(result));
-                
+                //console.log(JSON.parse(result));
+                //console.log(RowPointer);
+
             } catch(error){
                 console.log(error);
             }
@@ -65,58 +91,101 @@ class Movies{
 console.log()
 
 class Horror extends Movies{
-    constructor(name, poster){
-        super(name, poster);
+    constructor(name, row){
+        super(name, row);
         this.genre = "Horror";
     }
 }
 
-class Action extends Movies{
-    constructor(name, poster){
-        super(name, poster);
-        this.genre = "Adventure";
+class Thriller extends Movies{
+    constructor(name, row){
+        super(name, row);
+        this.genre = "Thriller";
     }
 }
 
 class Comedy extends Movies{
-    constructor(name, poster){
-        super(name, poster);
+    constructor(name, row){
+        super(name, row);
         this.genre = "Comedy";
     }
 }
 
-let Horror1 = new Horror(4, "33");
-let Action1 = new Action(4, "33");
-let Comedy1 = new Comedy(4, "33");
+class War extends Movies{
+    constructor(name, row){
+        super(name, row);
+        this.genre = "War";
+    }
+}
 
-//Horror1.GetMovieNames(Horror1.genre);
-Action1.GetMovieNames(Action1.genre);
-//Comedy1.GetMovieNames(Comedy1.genre);
+let Thriller1 = new Thriller("ThrillerRow", 7);
+let Comedy1 = new Comedy("ComedyRow", 3);
+let Horror1 = new Horror("HorrorRow", 7);
+let War1 = new War("WarRow", 4)
 
-async function UpdateImages(result){
+//calling the object functions
+
+//localStorage.clear();
+
+const movieRowList = [Comedy1, Horror1, Thriller1, War1]
+
+movieRowList[0].GetMovieNames(movieRowList[0]);
+
+async function loadRows(){
+    for(const fn of movieRowList){
+        await fn.GetMovieNames(fn);
+    }
+}
+
+//loadRows();
+
+async function UpdateImages(result, Instance){
     try{
         let api_result;
         //const JSON_result = JSON.parse(result);
-        for (let index = 0; index < 5; index++) {
+
+        //looping through the total images on home screen
+        for (let index = 0; index < Instance.row; index++) {
+            //checking to see if i already have JSON object stored
             if(getJsonObject(result.results[index].imdb_id) == null){
+                //calling API for results
+
                 const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/id/${result.results[index].imdb_id}/`, options_mmd)
                 const api_result_cached = await response.json();
                 api_result = api_result_cached;
+
+                //saving the result for future use
                 saveJsonObject(JSON.stringify(api_result) , result.results[index].imdb_id);
-            } else{
+            } 
+            else{
+                
+                //retrieving the stored JSON object and turning it into something useful
                 let api_result_raw = getJsonObject(result.results[index].imdb_id);
                 api_result = JSON.parse(api_result_raw);
                 console.log(api_result.results.title);
             }
             
-            image_Buffer.push(api_result.results.banner)
-            
-        }
+            image_Buffer.push(api_result);
+            //console.log(api_result);
+            //console.log(image_Buffer);
+            //finally setting the images, using a buffer to load the images in chuncks
 
-        for (let index = 0; index < 5; index++){
-            document.getElementsByClassName("flex1")[index].src = image_Buffer[index];
-            document.getElementsByClassName("movieAnchor")[index].href = "https://www.imdb.com/title/" + result.results[index].imdb_id + "/";
+            document.getElementsByClassName(Instance.name)[index].src = api_result.results.banner;
+            document.getElementsByClassName(Instance.name+"Anchor")[index].href = "https://www.imdb.com/title/" + api_result.results.imdb_id + "/";
+            if(document.getElementsByClassName(Instance.name+"Title")[index] != undefined){
+                document.getElementsByClassName(Instance.name+"Title")[index].innerHTML = api_result.results.title;
+            }
         }
+        RowPointer++;
+        //console.log(RowPointer);
+        if(RowPointer < movieRowList.length){
+            console.log(RowPointer)
+            movieRowList[RowPointer].GetMovieNames(movieRowList[RowPointer]);
+        }else{
+            console.log(RowPointer);
+            RowPointer = 0;
+        }
+        image_Buffer = [];
     }
     catch(error){
         console.log(error);
