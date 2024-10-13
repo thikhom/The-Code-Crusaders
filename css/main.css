@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 * {
     margin: 0;
     padding: 0;
@@ -214,4 +218,48 @@
     .footer__nav {
       flex: 2 0px;
     }
+<<<<<<< Updated upstream
   }
+=======
+  }
+
+.filterSection{
+    background-color: #D4D4D4;
+    height: 80px;
+}
+
+.buttons-center{
+    display: grid;
+    grid-gap: 10px;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.continue-button{
+    border-radius: 25px;
+    padding: 8px;
+}
+
+.form-text{
+    text-align: center;
+}
+
+#Form2{
+    width: 50%;
+    margin-top: px;
+    margin-bottom: 50px;
+    background-color: #fff;
+    padding: 75px;
+    border-radius: 5px;
+}
+
+.logo{
+    width: 20%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.signIn{
+    display: grid;
+}
+>>>>>>> Stashed changes
