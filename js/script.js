@@ -2,6 +2,7 @@ pageNumber = 1;
 moviesPageAmount = 10;
 chunkSize = 3;
 moviePointer = 0;
+RowPointer = 0;
 
 image_Buffer = [];
 
@@ -46,8 +47,8 @@ class Movies{
         this.name = name;
         this.row = row;
         this.genre = genre;
-    }
 
+    }
     GetMovieNames(Movie){
         async function movieName(){
             try{
@@ -115,8 +116,6 @@ class War extends Movies{
     }
 }
 
-//localStorage.clear();
-
 let Thriller1 = new Thriller("ThrillerRow", 7);
 let Comedy1 = new Comedy("ComedyRow", 3);
 let Horror1 = new Horror("HorrorRow", 7);
@@ -124,10 +123,22 @@ let War1 = new War("WarRow", 4)
 
 //calling the object functions
 
-Comedy1.GetMovieNames(Comedy1);
-Horror1.GetMovieNames(Horror1);
-Thriller1.GetMovieNames(Thriller1);
-War1.GetMovieNames(War1);
+//Comedy1.GetMovieNames(Comedy1);
+//Horror1.GetMovieNames(Horror1);
+//Thriller1.GetMovieNames(Thriller1);
+//War1.GetMovieNames(War1);
+
+//localStorage.clear();
+
+const movieRowList = [Comedy1, Horror1, Thriller1, War1]
+
+async function loadRows(){
+    for(const fn of movieRowList){
+        await fn.GetMovieNames(fn);
+    }
+}
+
+loadRows();
 
 async function UpdateImages(result, Instance){
     try{
