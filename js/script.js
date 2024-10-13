@@ -1,6 +1,7 @@
 pageNumber = 1;
 moviesPageAmount = 10;
 chunkSize = 3;
+moviePointer = 0;
 
 image_Buffer = [];
 
@@ -28,6 +29,16 @@ function getJsonObject(ID){
     const item = localStorage.getItem(ID);
     //console.log(JSON.parse(item));
     return JSON.parse(item);
+}
+
+async function LoadMovieSpecialized(MovieID){
+    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/id/${MovieID}/`, options_mmd)
+    const api_result_cached = await response.json();
+    api_result = api_result_cached;
+    console.log(api_result);
+
+    //document.getElementById(MovieID).href = "https://www.imdb.com/title/" + api_result.results[0].imdb_id + "/";
+    document.getElementById(MovieID).src = api_result.results[0].banner;
 }
 
 class Movies{
@@ -65,7 +76,7 @@ class Movies{
                      //updating home page images
                     UpdateImages(JSON.parse(result), Movie);
                 }
-                console.log(result);
+                //console.log(result);
 
             } catch(error){
                 console.log(error);
@@ -83,10 +94,10 @@ class Horror extends Movies{
     }
 }
 
-class Action extends Movies{
+class Thriller extends Movies{
     constructor(name, row){
         super(name, row);
-        this.genre = "Action";
+        this.genre = "Thriller";
     }
 }
 
@@ -96,23 +107,33 @@ class Comedy extends Movies{
         this.genre = "Comedy";
     }
 }
-let Horror1 = new Horror(4, "33");
-let Action1 = new Action(4, "33");
-let Comedy1 = new Comedy(4, 6);
+
+class War extends Movies{
+    constructor(name, row){
+        super(name, row);
+        this.genre = "War";
+    }
+}
+
+//localStorage.clear();
+
+let Thriller1 = new Thriller("ThrillerRow", 7);
+let Comedy1 = new Comedy("ComedyRow", 3);
+let Horror1 = new Horror("HorrorRow", 7);
+let War1 = new War("WarRow", 4)
 
 //calling the object functions
 
-//Horror1.GetMovieNames(Horror1.genre);
-//Action1.GetMovieNames(Action1.genre);
 Comedy1.GetMovieNames(Comedy1);
+Horror1.GetMovieNames(Horror1);
+Thriller1.GetMovieNames(Thriller1);
+War1.GetMovieNames(War1);
 
 async function UpdateImages(result, Instance){
     try{
         let api_result;
         //const JSON_result = JSON.parse(result);
 
-        let rowSize = chunkSize;
-        let imagePointer = Instance.row;
         //looping through the total images on home screen
         for (let index = 0; index < Instance.row; index++) {
             //checking to see if i already have JSON object stored
@@ -134,19 +155,23 @@ async function UpdateImages(result, Instance){
                 console.log(api_result.results.title);
             }
             
-            image_Buffer.push(api_result.results.banner)
-
+            image_Buffer.push(api_result)
+            //console.log(api_result);
+            console.log(image_Buffer);
             //finally setting the images, using a buffer to load the images in chuncks
 
-            if(index >= rowSize - 1 || imagePointer < chunkSize){
-                for (let index = 0; index < rowSize; index++){
-                    document.getElementsByClassName("flex1")[index].src = image_Buffer[index];
-                    document.getElementsByClassName("movieAnchor")[index].href = "https://www.imdb.com/title/" + result.results[index].imdb_id + "/";
-                }
-                rowSize = rowSize + chunkSize;
-                imagePointer -= chunkSize;
+            document.getElementsByClassName(Instance.name)[index].src = image_Buffer[index].results.banner;
+            document.getElementsByClassName(Instance.name+"Anchor")[index].href = "https://www.imdb.com/title/" + image_Buffer[index].results.imdb_id + "/";
+            if(document.getElementsByClassName(Instance.name+"Title")[index] != undefined){
+                document.getElementsByClassName(Instance.name+"Title")[index].innerHTML = image_Buffer[index].results.title;
             }
+            
         }
+        for (let index = 0; index < Instance.row; index++) {
+            //console.log(image_Buffer.shift());
+        }
+
+        image_Buffer = [];
     }
     catch(error){
         console.log(error);
