@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 * {
     margin: 0;
     padding: 0;
@@ -218,9 +215,6 @@
     .footer__nav {
       flex: 2 0px;
     }
-<<<<<<< Updated upstream
-  }
-=======
   }
 
 .filterSection{
@@ -262,4 +256,26 @@
 .signIn{
     display: grid;
 }
->>>>>>> Stashed changes
+
+.item{
+  width:200px;
+  display:block;
+  background-color: transparent;
+  border: 1px solid transparent;
+  margin-right: 10px;
+  margin-bottom: 1px;
+  float:left;
+}
+
+.card{
+  --bs-card-bg: #ffffff00;
+  --bs-card-border-color: #ffffff00;
+}
+
+.middleText{
+  margin-top: 200px;
+}
+
+#cardGap{
+  padding-right: 175px;
+}
