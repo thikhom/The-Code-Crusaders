@@ -52,7 +52,7 @@ class Movies{
                     result = _result;
 
                      //updating home page images
-                    UpdateImages(result);
+                    UpdateImages(result, Movie);
 
                     //saving result for future use
                     saveJsonObject(JSON.stringify(result), String(pageNumber) + Movie.genre);
@@ -96,10 +96,9 @@ class Comedy extends Movies{
         this.genre = "Comedy";
     }
 }
-
 let Horror1 = new Horror(4, "33");
 let Action1 = new Action(4, "33");
-let Comedy1 = new Comedy(4, 5);
+let Comedy1 = new Comedy(4, 6);
 
 //calling the object functions
 
@@ -107,15 +106,15 @@ let Comedy1 = new Comedy(4, 5);
 //Action1.GetMovieNames(Action1.genre);
 Comedy1.GetMovieNames(Comedy1);
 
-async function UpdateImages(result, Movie){
+async function UpdateImages(result, Instance){
     try{
         let api_result;
         //const JSON_result = JSON.parse(result);
 
         let rowSize = chunkSize;
-        let imagePointer = Movie.row;
+        let imagePointer = Instance.row;
         //looping through the total images on home screen
-        for (let index = 0; index < Movie.row; index++) {
+        for (let index = 0; index < Instance.row; index++) {
             //checking to see if i already have JSON object stored
             if(getJsonObject(result.results[index].imdb_id) == null){
                 //calling API for results
