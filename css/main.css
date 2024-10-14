@@ -1,57 +1,229 @@
-.--breadcrumb-divider-color{
-    color: red;
-}
-
-.breadcrumb{
-    color: red;
-}
-
-.active{
-    color: green;
-}
-
-.breadcrumb-bg{
-    color: green;
-}
-
-#breadcrumb-item{
-    font-weight: 900;
-}
-
-/* Hidding sections under 960px width */
-@media screen and (max-width: 960px) {
-    .hide-on-responsive{
-        display: none;
-    }
-}
-
-#fp-nav ul li a span, 
-.fp-slidesNav ul li a span{
-    background-color: white;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Helvetica, sans-serif;
 }
 
 
-.actions{
-    position: absolute;
-    z-index: 999;
-    top: 40px;
-    left: 50px;
+@font-face {
+    font-family: PorterSans;
+    src: url(../assets/Fonts/porter_sans_block/porter-sans-inline-block.otf);
 }
-.actions li{
+
+@font-face {
+    font-family: PorterSansExplore;
+    src: url(../assets/Fonts/porter_sans_block/porter-sans-inline-block-webfont.eot);
+}
+
+.card-img-top{
+  width: 200px;
+}
+
+.card-body{
+  background-color: #a1a1a156;
+}
+
+.carouselSection{
+    background-color: #343434;
+    height: auto;
+}
+
+.carousel-caption {
+    position: relative;
+}
+.carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    padding: 20px;
+    padding-left: 50px;
+}
+
+.carousel-caption {
+    padding-left: 30px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.scrollable-row {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.scrollable-row .card {
     display: inline-block;
+    min-width: 200px;
+    margin-right: 1rem;
 }
-.actions button {
-    padding: 0.93em 1.87em;
-    background: #35495e;
-    border-radius: 5px;
-    border: 0;
-    color: #fff;
-    margin: 7px;
-    font-size: 15px;
-    cursor: pointer;
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+.card-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
 }
 
-.actions button:hover {
-    background: #fff;
-    color: #35495e;
+.scrollabeSection{
+    background-color: #9A9A9A;
+    height: auto;
 }
+
+.carousel-control-prev{
+    width: 100px;
+}
+
+.carousel-control-next{
+    width: 100px;
+}
+
+.findOutMore{
+    background-image: url("../assets/placeholder.jpg");
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.findOutMoreText{
+    width: 500px;
+    
+}
+
+.centerFindMoreText{
+   text-align: center;
+   align-content: center;
+}
+
+.footer {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 30px 30px 20px 30px;
+    color: #2f2f2f;
+    background-color: #fff;
+    border-top: 1px solid #e5e5e5;
+  }
+  
+  .footer > * {
+    flex:  1 100%;
+  }
+  
+  .footer__addr {
+    margin-right: 1.25em;
+    margin-bottom: 2em;
+  }
+  
+  .footer__logo {
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    text-transform: lowercase;
+    font-size: 1.5rem;
+  }
+  
+  .footer__addr h2 {
+    margin-top: 1.3em;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  .nav__title {
+    font-weight: 400;
+    font-size: 15px;
+  }
+  
+  .footer address {
+    font-style: normal;
+    color: #999;
+  }
+  
+  .footer__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    max-width: max-content;
+    background-color: rgb(33, 33, 33, 0.07);
+    border-radius: 100px;
+    color: #2f2f2f;
+    line-height: 0;
+    margin: 0.6em 0;
+    font-size: 1rem;
+    padding: 0 1.3em;
+  }
+  
+  .footer ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .footer li {
+    line-height: 2em;
+  }
+  
+  .footer a {
+    text-decoration: none;
+  }
+  
+  .footer__nav {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  
+  .footer__nav > * {
+    flex: 1 50%;
+    margin-right: 1.25em;
+  }
+  
+  .nav__ul a {
+    color: #999;
+  }
+  
+  .nav__ul--extra {
+    column-count: 2;
+    column-gap: 1.25em;
+  }
+  
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    color: #999;
+    
+  }
+    
+  .legal__links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .heart {
+    color: #2f2f2f;
+  }
+
+  #ClassicComedyHome{
+    height: 600px;
+  }
+  
+  @media screen and (min-width: 24.375em) {
+    .legal .legal__links {
+      margin-left: auto;
+    }
+  }
+  
+  @media screen and (min-width: 40.375em) {
+    .footer__nav > * {
+      flex: 1;
+    }
+    
+    .nav__item--extra {
+      flex-grow: 2;
+    }
+    
+    .footer__addr {
+      flex: 1 0px;
+    }
+    
+    .footer__nav {
+      flex: 2 0px;
+    }
+  }
