@@ -45,9 +45,8 @@ async function LoadMovieSpecialized(MovieID){
 class Movies{
     constructor(name, row, genre){
         this.name = name;
-        this.row = row;
+        this.row = document.getElementsByClassName(this.name).length;
         this.genre = genre;
-
     }
     GetMovieNames(Movie){
         async function movieName(){
@@ -117,16 +116,17 @@ class War extends Movies{
     }
 }
 
-let Thriller1 = new Thriller("ThrillerRow", 7);
-let Comedy1 = new Comedy("ComedyRow", 3);
-let Horror1 = new Horror("HorrorRow", 7);
-let War1 = new War("WarRow", 4)
+let Thriller1 = new Thriller("ThrillerRow");
+let Comedy1 = new Comedy("ComedyRow");
+let Horror1 = new Horror("HorrorRow");
+let War1 = new War("WarRow")
 
 //calling the object functions
 
 //localStorage.clear();
 
-const movieRowList = [Comedy1, Horror1, Thriller1, War1]
+/*const movieRowList = [Comedy1, Horror1, Thriller1, War1]*/
+const movieRowList = [Comedy1, Horror1];
 
 movieRowList[0].GetMovieNames(movieRowList[0]);
 
@@ -136,7 +136,12 @@ async function loadRows(){
     }
 }
 
-//loadRows();
+async function loadFromAPI(result, index){
+    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/id/${result.results[index].imdb_id}/`, options_mmd)
+    const api_result_cached = await response.json();
+    saveJsonObject(JSON.stringify(api_result_cached) , result.results[index].imdb_id);
+    return api_result_cached;
+}
 
 async function UpdateImages(result, Instance){
     try{
@@ -149,12 +154,11 @@ async function UpdateImages(result, Instance){
             if(getJsonObject(result.results[index].imdb_id) == null){
                 //calling API for results
 
-                const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/id/${result.results[index].imdb_id}/`, options_mmd)
-                const api_result_cached = await response.json();
-                api_result = api_result_cached;
+                
+                api_result = await loadFromAPI(result, index);
 
                 //saving the result for future use
-                saveJsonObject(JSON.stringify(api_result) , result.results[index].imdb_id);
+                
             } 
             else{
                 
@@ -164,15 +168,14 @@ async function UpdateImages(result, Instance){
                 console.log(api_result.results.title);
             }
             
-            image_Buffer.push(api_result);
             //console.log(api_result);
             //console.log(image_Buffer);
             //finally setting the images, using a buffer to load the images in chuncks
 
-            document.getElementsByClassName(Instance.name)[index].src = api_result.results.banner;
-            document.getElementsByClassName(Instance.name+"Anchor")[index].href = "https://www.imdb.com/title/" + api_result.results.imdb_id + "/";
+            document.getElementsByClassName(Instance.name)[index].src = await api_result.results.banner;
+            document.getElementsByClassName(Instance.name+"Anchor")[index].href = await "https://www.imdb.com/title/" + api_result.results.imdb_id + "/";
             if(document.getElementsByClassName(Instance.name+"Title")[index] != undefined){
-                document.getElementsByClassName(Instance.name+"Title")[index].innerHTML = api_result.results.title;
+                document.getElementsByClassName(Instance.name+"Title")[index].innerHTML = await api_result.results.title;
             }
         }
         RowPointer++;
