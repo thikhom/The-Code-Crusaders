@@ -116,22 +116,30 @@ class War extends Movies{
     }
 }
 
+class Adventure extends Movies{
+    constructor(name, row){
+        super(name, row);
+        this.genre = "Adventure"
+    }
+}
+
 let Thriller1 = new Thriller("ThrillerRow");
 let Comedy1 = new Comedy("ComedyRow");
 let Horror1 = new Horror("HorrorRow");
-let War1 = new War("WarRow")
+let War1 = new War("WarRow");
+let Adventure2 = new Adventure("AdventureRow");
 
 //calling the object functions
 
 //localStorage.clear();
 
 /*const movieRowList = [Comedy1, Horror1, Thriller1, War1]*/
-const movieRowList = [Comedy1, Horror1];
+const HomeMovieList = [Comedy1, Horror1, Adventure2];
 
-movieRowList[0].GetMovieNames(movieRowList[0]);
+HomeMovieList[0].GetMovieNames(HomeMovieList[0]);
 
 async function loadRows(){
-    for(const fn of movieRowList){
+    for(const fn of HomeMovieList){
         await fn.GetMovieNames(fn);
     }
 }
@@ -180,9 +188,9 @@ async function UpdateImages(result, Instance){
         }
         RowPointer++;
         //console.log(RowPointer);
-        if(RowPointer < movieRowList.length){
+        if(RowPointer < HomeMovieList.length){
             console.log(RowPointer)
-            movieRowList[RowPointer].GetMovieNames(movieRowList[RowPointer]);
+            HomeMovieList[RowPointer].GetMovieNames(HomeMovieList[RowPointer]);
         }else{
             console.log(RowPointer);
             RowPointer = 0;
