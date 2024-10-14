@@ -281,7 +281,7 @@
 }
 
 #cardGap{
-  padding-right: 0px;
+  padding-right: 150px;
   align-items: center;
 }
 
@@ -294,4 +294,28 @@
 }
 .carousel-caption{
   width: 400px;
+}
+
+#cardCenter{
+  align-items: center;
+}
+
+.individualMovie{
+  background-color: #2f2f2f;
+  height: auto;
+}
+
+.movieDetails{
+  display: flex;
+  gap: 20px;
+}
+
+.containerRow{
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.individualMovieDetails{
+  background-color: #8f8f8f;
+  height: auto;
 }
