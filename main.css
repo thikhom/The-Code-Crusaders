@@ -3,26 +3,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-<<<<<<< Updated upstream
-    font-family: 'Poppins', Helvetica, sans-serif;
-   }
-   
-   
-   /* Font Imports */
-   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito+Sans:wght@400;600&display=swap');
-   
-   
-   /* Image Styles */
-   .card-img-top {
-    width: 200px;
-    height: 300px; /* Ensures uniform height for movie posters */
-    object-fit: cover; /* Ensures the image fills the container */
-   }
-   
-   
-   /* Navbar Styles */
-   .navbar {
-=======
 }
 
 /* Font Imports */
@@ -124,23 +104,10 @@ h6 {
 
 /* Navbar Styles */
 .navbar {
->>>>>>> Stashed changes
     background-color: #000000;
     padding: 1rem;
     display: flex;
     align-items: center;
-<<<<<<< Updated upstream
-   }
-   
-   
-   .navbar-brand img {
-    width: 120px;
-    height: auto;
-   }
-   
-   
-   .navbar .navbar-brand {
-=======
     justify-content: space-between;
 }
 
@@ -168,7 +135,6 @@ h6 {
 .search-input {
     background-color: #1a1a1a;
     border: 1px solid #9A9A9A;
->>>>>>> Stashed changes
     color: #9A9A9A;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
@@ -212,16 +178,6 @@ h6 {
    .search-form {
     display: flex;
     align-items: center;
-<<<<<<< Updated upstream
-    margin-left: 1rem; /* Space between logo and search bar */
-    margin-right: 2rem;
-   }
-   
-   
-   .search-input {
-    background-color: #1a1a1a;
-    border: 1px solid #9A9A9A;
-=======
 }
 
 .navbar-icons .icon {
@@ -248,7 +204,6 @@ h6 {
 
 .btn-sign-up:hover {
     background-color: #ffffff;
->>>>>>> Stashed changes
     color: #9A9A9A;
     padding: 0.6rem 1rem; /* Slight increase in padding for consistency with button */
     border-radius: 30px 0 0 30px; /* Rounded corners for the left side */
@@ -295,7 +250,6 @@ h6 {
     background-color: #ffffff;
     border-color: #ffffff;
     transition: all 0.3s ease;
-<<<<<<< Updated upstream
    }
    
    
@@ -321,17 +275,6 @@ h6 {
    
    /* Card Body */
    .card-body {
-=======
-}
-
-/* Mobile Search Bar */
-.search-form-mobile {
-    flex: 1;
-}
-
-/* Card Body */
-.card-body {
->>>>>>> Stashed changes
     background-color: rgba(161, 161, 161, 0.34);
 }
 
