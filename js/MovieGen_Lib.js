@@ -1,61 +1,68 @@
 pageNumber = 1;
-moviesPageAmount = 10;
-chunkSize = 3;
-moviePointer = 0;
-RowPointer = 0;
 
 image_Buffer = [];
 
-const options_mmd = {
-	method: 'GET',
-	headers: {
-		'x-rapidapi-key': '8ced3a6172msh4420e9f690764b0p152b71jsn3ef5dbc50576',
-		'x-rapidapi-host': 'moviesminidatabase.p.rapidapi.com'
-	}
-};
-
-//saves a JSON Object with its unique ID
-function saveJsonObject(jsonObject, ID){
-    try{
-        localStorage.setItem(ID, JSON.stringify(jsonObject))
-        console.log("Cached: " + ID);
-    }
-    catch (error){
-        console.log(error);
-    }
-}
-
-//Retrieves JSON object with ID
-function getJsonObject(ID){
-    const item = localStorage.getItem(ID);
-    //console.log(JSON.parse(item));
-    return JSON.parse(item);
-}
-
-async function LoadMovieSpecialized(MovieID){
-    const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/id/${MovieID}/`, options_mmd)
-    const api_result_cached = await response.json();
-    api_result = api_result_cached;
-    console.log(api_result);
-
-    //document.getElementById(MovieID).href = "https://www.imdb.com/title/" + api_result.results[0].imdb_id + "/";
-    document.getElementById(MovieID).src = api_result.results[0].banner;
-}
-
 class Movies{
-    constructor(name, row, genre){
+    constructor(name, row, genre, poster){
         this.name = name;
         this.row = document.getElementsByClassName(this.name).length;
         this.genre = genre;
+        this.poster = poster;
     }
-    GetMovieNames(Movie){
-        async function movieName(){
-            try{
-                let result;
+}
 
-                //checking to see if i already have the result stored: to reduce API calls
+const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMTBkOGMzNWQ5YzI1NDA4MjI3YmY3MjI5ZGZmZTg3YiIsIm5iZiI6MTcyOTA3NzY2OC4wMjUzMTcsInN1YiI6IjY2ZTgyNDlkZGQyMjRkMWEzOTkxZDkzOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LcrKnRRMJ_4Y4ahXNTcY3H3anUkGRA0W6D0kLR2-1Rs'
+    }
+};
+    
+let movieList;
+      
+    
+    //GetMovieNames(Movie){
+async function movieName() {
+  // try{
+  //     let result;
 
-                if(getJsonObject(String(pageNumber) + Movie.genre) == null)
+  fetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",options)
+    .then((response) => response.json())
+    .then((response) => {
+    console.log(response);
+    movieList = response;
+    SortMovies(movieList);
+
+    }).catch((err) => console.error(err));
+}
+
+movieName();
+
+function SortMovies(_movieList) {
+    moviesToLoad = document.getElementsByClassName("movieLib_IMG").length;
+    if(moviesToLoad < _movieList.results.length){
+        for (let index = 0; index < moviesToLoad; index++) {
+            document.getElementsByClassName("movieLib_IMG")[index].src = `https://image.tmdb.org/t/p/original/${_movieList.results[index].poster_path}`;
+            document.getElementsByClassName("movieLib_Title")[index].innerHTML = _movieList.results[index].original_title;
+            document.getElementsByClassName("movieLib_subTitle")[index].innerHTML = String(_movieList.results[index].release_date).substring(0, 4);
+        }
+    } else{
+        for (let index = 0; index < _movieList.results.length; index++) {
+            document.getElementsByClassName("movieLib_IMG")[index].src = `https://image.tmdb.org/t/p/original/${_movieList.results[index].poster_path}`;
+            document.getElementsByClassName("movieLib_Title")[index].innerHTML = _movieList.results[index].original_title;
+            document.getElementsByClassName("movieLib_subTitle")[index].innerHTML = String(_movieList.results[index].release_date).substring(0, 4);
+        }
+    }
+}
+
+            // class Horror extends Movies{
+            //     constructor(name, row){
+            //         super(name, row);
+            //         this.genre = "Horror";
+            //     }
+            // }
+                /*if(getJsonObject(String(pageNumber) + Movie.genre) == null)
                 {
                     //calling API for result as it not stored
                     const response = await fetch(`https://moviesminidatabase.p.rapidapi.com/movie/byGen/${Movie.genre}/`, options_mmd)
@@ -84,9 +91,9 @@ class Movies{
             }
         }
         movieName();
-    }
+    }*/
     
-}
+/*
 
 class Horror extends Movies{
     constructor(name, row){
@@ -133,7 +140,7 @@ let Adventure2 = new Adventure("AdventureRow");
 
 //localStorage.clear();
 
-/*const movieRowList = [Comedy1, Horror1, Thriller1, War1]*/
+/*const movieRowList = [Comedy1, Horror1, Thriller1, War1]
 const HomeMovieList = [Comedy1, Horror1, Adventure2];
 
 HomeMovieList[0].GetMovieNames(HomeMovieList[0]);
@@ -201,3 +208,4 @@ async function UpdateImages(result, Instance){
         console.log(error);
     }
 }
+*/
